@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import WeekdayDateRangePicker from "./WeekDayDatePicker";
 
-function App() {
+const App: React.FC = () => {
+  const [range, setRange] = useState<string[]>([]);
+  const [weekends, setWeekends] = useState<string[]>([]);
+
+  const handleDateChange = (range: string[], weekends: string[]) => {
+    setRange(range);
+    setWeekends(weekends);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Weekday Date Range Picker</h1>
+      <WeekdayDateRangePicker
+        onChange={handleDateChange}
+        predefinedRanges={[
+          { label: "Last 7 Days", range: ["2025-02-15", "2025-02-21"] },
+          { label: "Last 30 Days", range: ["2025-01-23", "2025-02-21"] },
+        ]}
+      />
+
+      <span>Selected Range: [{range.toString()}]</span><br/>
+      <span>Weekends in Selected Range: [{weekends.toString()}]</span>
     </div>
   );
-}
+};
 
 export default App;
